@@ -1,0 +1,66 @@
+﻿@page "/portfolio"
+@using System.Net.Http
+@inject HttpClient Http
+<div class="content px-4">
+    <h1> Open Source Projects </h1>
+    <p> This page fetches data from Github.com</p>
+
+    @if (_items == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Created</th>
+                    <th>Last Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in _items)
+                {
+                    <tr>
+                        <td>
+                            <a href=@item.HTML_URL>
+                                @item.Full_Name
+                            </a>
+                        </td>
+                        <td>@item.Description</td>
+                        <td>@item.Created_At.ToShortDateString()</td>
+                        <td>@item.Updated_At.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+</div>
+
+@functions {
+    IList<HistoryItem> _items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // header needed for github now or it will 403
+        Http.DefaultRequestHeaders.UserAgent.ParseAdd("API");
+
+        _items = await Http.GetJsonAsync<HistoryItem[]>("https://api.github.com/users/maximus258/repos");
+    }
+
+    class HistoryItem
+    {
+        public string Full_Name { get; set; }
+        public string Description { get; set; }
+        public string HTML_URL { get; set; }
+        public DateTime Created_At { get; set; }
+        public DateTime Updated_At { get; set; }
+        public string Language { get; set; }
+        public bool Fork { get; set; }
+    }
+}
+
+
