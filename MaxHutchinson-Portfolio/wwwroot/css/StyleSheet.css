@@ -264,12 +264,17 @@ button:focus, .btn:focus, .btn:active:focus {
                 line-height: 33px;
                 text-align: center;
                 border-radius: 100%;
-                border: 2px solid rgba(255,255,255,.2)
+                /*border: 2px solid rgba(255,255,255,.2)*/
             }
 
                 .header .content .social-icon li a:hover {
                     border-color: #fff
                 }
+
+
+.p11 {
+    padding-top: 11px;
+}
 
 @media(max-width:600px) {
     .header .profile-img {
