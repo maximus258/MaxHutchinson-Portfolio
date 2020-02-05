@@ -5,7 +5,6 @@ using Serilog;
 using System;
 using System.IO;
 
-
 namespace MaxHutchinson_Portfolio
 {
 
